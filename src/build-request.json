@@ -1,0 +1,257 @@
+{
+  "kind": "build_request",
+  "title": "Add text-to-speech, doubt clarification system, ready-made notes, quiz section, progress tracking, and Google authentication",
+  "projectName": "EduClarify",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-11",
+      "text": "Implement text-to-speech (TTS) functionality for the AI teacher avatar so that explanations are spoken aloud when displayed in the TeacherAvatarPanel, supporting English, Hindi, and Marathi languages",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Text-to-speech (TTS) for AI teacher avatar to speak explanations aloud"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The TeacherAvatarPanel component triggers TTS when an explanation is displayed",
+        "TTS uses the browser's SpeechSynthesis API or equivalent",
+        "The spoken language matches the current app language setting (English, Hindi, or Marathi)",
+        "User can pause or stop TTS playback",
+        "TTS gracefully handles unsupported browsers with a fallback message"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Create a doubt clarification system where students can submit doubts by typing text, speaking via microphone, or capturing an image via camera, and the system provides step-by-step explanations with examples",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Doubt clarification system: students type, speak, or photograph doubts; AI analyzes and provides step-by-step explanations",
+          "Students can: Type their doubts. Speak their doubts using microphone. Take a picture of a question using camera."
+        ]
+      },
+      "acceptanceCriteria": [
+        "A new Doubts page or section allows students to submit doubts via text input, voice input (using existing microphone integration), or camera capture (using existing camera integration)",
+        "Backend stores submitted doubts with the user's principal, doubt content (text or image blob reference), and timestamp",
+        "Backend returns a structured explanation for each doubt (step-by-step breakdown and examples)",
+        "Frontend displays the explanation in a clear, student-friendly format",
+        "Students can view a history of submitted doubts and their explanations"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Provide ready-made notes organized by class (4th to 12th standard) and subject, allowing students to browse, view, highlight important points, download, and share notes",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Ready-made notes organized by class (4–12) and subject, with highlighting, download, and share options",
+          "Provide ready-made notes for each subject and topic. Notes should be: Class-wise organized (4th to 12th). Subject-wise categorized. Easy to understand."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend stores a library of ready-made notes with fields for class level (4-12), subject, topic, and content",
+        "Frontend provides a browser/filter UI to select class and subject, displaying matching ready-made notes",
+        "Students can view full note content in a readable format",
+        "Students can highlight text within notes (stored locally or per-user in backend)",
+        "Students can download notes as a text or PDF file",
+        "Students can share notes via a shareable link or export mechanism"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Replace Internet Identity authentication with Google Sign-Up/Sign-In using Google OAuth, and store student profile data including class level, subjects, saved notes, and learning history",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Google Sign-Up/Authentication and user profile storage (class, subjects, saved notes, learning history)",
+          "Google Sign-Up System: Students must sign up using their Google account. Store: Student class, Subjects, Saved notes, Learning history"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Frontend integrates Google OAuth for sign-up and sign-in, replacing the existing Internet Identity flow",
+        "Backend stores user profile data: Google account ID, class level (4-12), selected subjects, saved notes references, and learning history timestamps",
+        "Users can set their class level and subjects during initial sign-up or in Settings",
+        "All user-specific data (notes, doubts, progress) is associated with the authenticated Google account",
+        "Existing notes and images remain user-specific under the new authentication system"
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "text": "Implement a quiz section where students can take quizzes on topics, with questions, answer options, scoring, and results display",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Quiz section for students",
+          "Quiz section"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend stores quiz data with questions, multiple-choice answers, correct answers, and associated topic/subject",
+        "Frontend provides a quiz-taking UI where students select a topic, view questions one by one, and submit answers",
+        "Quiz results are calculated and displayed immediately after completion (score and correct/incorrect breakdown)",
+        "Quiz history is stored per user in the backend",
+        "Students can review past quiz attempts and scores"
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "text": "Add a progress tracking dashboard that displays the student's learning progress, including topics studied, quizzes completed, notes created, and doubts clarified over time",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Progress tracking dashboard",
+          "Progress tracking"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend tracks user activity: topics viewed, videos watched, quizzes taken, notes created, and doubts submitted",
+        "Frontend displays a dashboard page with visual progress indicators (charts, counts, or progress bars)",
+        "Dashboard shows metrics such as total topics studied, quizzes passed, notes count, and recent activity timeline",
+        "Progress data is persisted per authenticated user and updated in real-time"
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "text": "Implement daily practice questions feature that presents a small set of practice questions to students each day, with answers and explanations",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Daily practice questions feature",
+          "Daily practice questions"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend generates or retrieves a set of daily practice questions (randomized or scheduled) for each class level and subject",
+        "Frontend displays a daily practice section on the dashboard or a dedicated page",
+        "Students can attempt the questions and view answers with explanations after submission",
+        "Completed daily practice is tracked and contributes to the progress dashboard"
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "text": "Add a doubt history log where students can view all previously submitted doubts, their timestamps, and the explanations provided",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Doubt history log",
+          "Doubt history"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend stores all submitted doubts with timestamps and associated explanations",
+        "Frontend provides a Doubt History page listing all past doubts sorted by date",
+        "Students can click on a doubt to view the full question and explanation again",
+        "Doubts can be filtered or searched by keyword or date range"
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "text": "Enable offline saved notes capability so students can access their notes and ready-made notes without an internet connection",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Offline saved notes capability",
+          "Offline saved notes"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Frontend caches notes data (user-created and ready-made) locally using IndexedDB or localStorage",
+        "Students can view cached notes when offline",
+        "When online, the app syncs any new notes or edits with the backend",
+        "A visual indicator shows when the app is in offline mode"
+      ]
+    },
+    {
+      "id": "REQ-20",
+      "text": "Implement personalized learning recommendations on the dashboard that suggest topics, quizzes, or practice questions based on the student's progress, class level, and subjects",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Personalized learning recommendations",
+          "Personalized learning recommendations"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend analyzes user activity (topics viewed, quiz scores, doubts submitted) to generate personalized recommendations",
+        "Frontend displays recommended topics or quizzes on the dashboard or home page",
+        "Recommendations adapt as the student progresses and interacts with more content",
+        "Students can dismiss or act on recommendations directly from the UI"
+      ]
+    },
+    {
+      "id": "REQ-21",
+      "text": "Add an animated AI teacher avatar with smooth transitions and friendly gestures in the TeacherAvatarPanel to enhance the student interface experience",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Animated AI teacher avatar with friendly student interface",
+          "Animated AI teacher avatar"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The teacher avatar image is replaced with an animated SVG or Lottie animation showing gestures (e.g., waving, pointing, nodding)",
+        "Animations trigger at appropriate times (e.g., when an explanation is displayed or TTS is playing)",
+        "Animations are subtle and do not distract from the learning content",
+        "Avatar animation is optimized for performance on mobile devices"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify frontend/src/hooks/useInternetIdentity.ts or useInternetIdentity.tsx directly; integrate Google OAuth separately and refactor authentication flow as needed",
+    "Do not edit read-only UI component sources in frontend/src/components/ui; compose or extend them instead",
+    "Keep all Motoko backend logic in the single main actor file (backend/main.mo)",
+    "Ready-made notes, quiz questions, and daily practice questions must be stored in the backend and served via the actor API",
+    "Google OAuth integration must replace Internet Identity but preserve existing user data migration path",
+    "Offline capability must not rely on backend-hosted images; cache image blobs locally",
+    "TTS must use browser-native APIs (SpeechSynthesis); do not integrate third-party TTS services"
+  ],
+  "nonGoals": [
+    "Integrating third-party LLM APIs (OpenAI, Anthropic) for doubt explanations; use predefined logic or simple pattern matching",
+    "Advanced image recognition or OCR for handwritten problems; store captured images and provide manual or rule-based explanations",
+    "Real-time collaboration or chat features between students",
+    "Mobile app packaging for Android/iOS native stores; this is a web-based mobile-friendly app",
+    "SMS or push notifications for daily practice reminders",
+    "Blockchain or Web3 wallet integration",
+    "Video streaming from external platforms; use local or simple URL-based video sources"
+  ],
+  "imageRequirements": {
+    "required": [
+      "Animated AI teacher avatar illustration showing a friendly, approachable teacher character with welcoming gesture, suitable for Class 4–12 students (teacher-avatar-animated.dim_256x256.png)"
+    ],
+    "edits": []
+  }
+}

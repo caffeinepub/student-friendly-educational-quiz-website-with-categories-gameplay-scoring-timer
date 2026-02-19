@@ -1,0 +1,307 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Educational app for students (Class 4–12) focused on concept clarification via AI teacher avatar (with voice/TTS), doubt resolution (text/voice/camera input), and smart notes (ready-made + user-created, organized by class/subject), with Google sign-up, progress tracking, quizzes, and multilingual support.",
+  "architectural_notes": [
+    "Google Authentication required instead of Internet Identity for user sign-up and profile management",
+    "AI must analyze text, voice (speech-to-text), and image (OCR/image recognition) inputs for doubt clarification",
+    "Ready-made notes must be preloaded and organized hierarchically by class (4–12) and subject",
+    "Text-to-speech (TTS) engine required for AI teacher avatar voice output",
+    "Progress tracking and learning history stored per authenticated user",
+    "Mobile-first design targeting Android & iOS platforms",
+    "Offline storage capability for saved notes",
+    "Cloud database for storing user notes, learning history, and doubt history"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Animated AI teacher avatar illustration showing a friendly, approachable teacher character with welcoming gesture, suitable for Class 4–12 students (teacher-avatar-animated.dim_256x256.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-the-core-app-information-architecture-and-navigation-for-a-class-4-12-concept-clarification-and-notes-app-including-1-a-topic-browser-search-2-a-topic-detail-learning-view-3-a-notes-area-list-editor-and-4-a-settings-area-for-language-and-permissions",
+      "title": "Create the core app information architecture and navigation for a Class 4–12 concept-clarification and notes app, including: (1) a topic browser/search, (2) a topic detail/learning view, (3) a notes area (list + editor), and (4) a settings area for language and permissions.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-topics-video-experience-where-students-can-select-a-subject-topic-and-watch-a-video-for-a-specific-topic-point-to-clear-concepts",
+      "title": "Implement a Topics + Video experience where students can select a subject/topic and watch a video for a specific topic/point to clear concepts.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-ai-teacher-avatar-guide-in-the-topic-learning-view-that-presents-short-simple-explanations-appropriate-for-class-4-12-students-and-can-switch-teaching-language-between-english-hindi-and-marathi",
+      "title": "Add an AI teacher avatar guide in the Topic Learning View that presents short, simple explanations appropriate for Class 4–12 students and can switch teaching language between English, Hindi, and Marathi.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-a-student-note-creation-feature-where-the-user-can-create-edit-and-delete-their-own-notes-optionally-linking-a-note-to-a-topic-point-and-persist-notes-per-authenticated-user",
+      "title": "Provide a student note creation feature where the user can create, edit, and delete their own notes, optionally linking a note to a topic/point, and persist notes per authenticated user.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-in-app-camera-capture-feature-that-allows-the-user-to-take-a-photo-from-their-device-camera-and-attach-it-to-a-note-saved-as-an-image-asset-for-that-note",
+      "title": "Add an in-app camera capture feature that allows the user to take a photo from their device camera and attach it to a note (saved as an image asset for that note).",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-microphone-based-voice-control-feature-that-lets-the-user-perform-basic-in-app-actions-using-voice-commands-e-g-open-topics-start-pause-video-create-a-note-switch-language",
+      "title": "Add a microphone-based voice control feature that lets the user perform basic in-app actions using voice commands (e.g., open topics, start/pause video, create a note, switch language).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-an-app-wide-language-change-option-with-choices-english-hindi-and-marathi-that-affects-the-teacher-s-teaching-language-and-any-multilingual-learning-strings-used-in-the-learning-view",
+      "title": "Implement an app-wide language change option with choices English, Hindi, and Marathi that affects the teacher’s teaching language and any multilingual learning strings used in the learning view.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-authentication-via-internet-identity-so-notes-and-any-captured-images-linked-to-notes-are-user-specific",
+      "title": "Add authentication via Internet Identity so notes (and any captured images linked to notes) are user-specific.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-define-and-apply-a-coherent-student-friendly-visual-theme-not-blue-purple-with-consistent-typography-spacing-and-components-across-all-screens",
+      "title": "Define and apply a coherent, student-friendly visual theme (not blue/purple) with consistent typography, spacing, and components across all screens.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-and-include-custom-static-images-for-the-app-teacher-avatar-and-a-small-set-of-educational-icons-and-render-them-from-the-frontend-as-static-assets",
+      "title": "Generate and include custom static images for the app (teacher avatar and a small set of educational icons) and render them from the frontend as static assets.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-text-to-speech-tts-functionality-for-the-ai-teacher-avatar-so-that-explanations-are-spoken-aloud-when-displayed-in-the-teacheravatarpanel-supporting-english-hindi-and-marathi-languages",
+      "title": "Implement text-to-speech (TTS) functionality for the AI teacher avatar so that explanations are spoken aloud when displayed in the TeacherAvatarPanel, supporting English, Hindi, and Marathi languages",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-doubt-clarification-system-where-students-can-submit-doubts-by-typing-text-speaking-via-microphone-or-capturing-an-image-via-camera-and-the-system-provides-step-by-step-explanations-with-examples",
+      "title": "Create a doubt clarification system where students can submit doubts by typing text, speaking via microphone, or capturing an image via camera, and the system provides step-by-step explanations with examples",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-ready-made-notes-organized-by-class-4th-to-12th-standard-and-subject-allowing-students-to-browse-view-highlight-important-points-download-and-share-notes",
+      "title": "Provide ready-made notes organized by class (4th to 12th standard) and subject, allowing students to browse, view, highlight important points, download, and share notes",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-internet-identity-authentication-with-google-sign-up-sign-in-using-google-oauth-and-store-student-profile-data-including-class-level-subjects-saved-notes-and-learning-history",
+      "title": "Replace Internet Identity authentication with Google Sign-Up/Sign-In using Google OAuth, and store student profile data including class level, subjects, saved notes, and learning history",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-quiz-section-where-students-can-take-quizzes-on-topics-with-questions-answer-options-scoring-and-results-display",
+      "title": "Implement a quiz section where students can take quizzes on topics, with questions, answer options, scoring, and results display",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-progress-tracking-dashboard-that-displays-the-student-s-learning-progress-including-topics-studied-quizzes-completed-notes-created-and-doubts-clarified-over-time",
+      "title": "Add a progress tracking dashboard that displays the student's learning progress, including topics studied, quizzes completed, notes created, and doubts clarified over time",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-daily-practice-questions-feature-that-presents-a-small-set-of-practice-questions-to-students-each-day-with-answers-and-explanations",
+      "title": "Implement daily practice questions feature that presents a small set of practice questions to students each day, with answers and explanations",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-doubt-history-log-where-students-can-view-all-previously-submitted-doubts-their-timestamps-and-the-explanations-provided",
+      "title": "Add a doubt history log where students can view all previously submitted doubts, their timestamps, and the explanations provided",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enable-offline-saved-notes-capability-so-students-can-access-their-notes-and-ready-made-notes-without-an-internet-connection",
+      "title": "Enable offline saved notes capability so students can access their notes and ready-made notes without an internet connection",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-personalized-learning-recommendations-on-the-dashboard-that-suggest-topics-quizzes-or-practice-questions-based-on-the-student-s-progress-class-level-and-subjects",
+      "title": "Implement personalized learning recommendations on the dashboard that suggest topics, quizzes, or practice questions based on the student's progress, class level, and subjects",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-animated-ai-teacher-avatar-with-smooth-transitions-and-friendly-gestures-in-the-teacheravatarpanel-to-enhance-the-student-interface-experience",
+      "title": "Add an animated AI teacher avatar with smooth transitions and friendly gestures in the TeacherAvatarPanel to enhance the student interface experience",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Video-based concept clarification by topic/points for Class 4–12 students",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "AI teacher avatar to guide/teach students with simple language appropriate for Class 4–12",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "User note creation feature (students can create and save their own notes)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "In-app camera feature to click photos",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Microphone/voice control feature",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Language change option; AI teacher teaches in English, Hindi, and Marathi",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Text-to-speech (TTS) for AI teacher avatar to speak explanations aloud",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Doubt clarification system: students type, speak, or photograph doubts; AI analyzes and provides step-by-step explanations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Ready-made notes organized by class (4–12) and subject, with highlighting, download, and share options",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Google Sign-Up/Authentication and user profile storage (class, subjects, saved notes, learning history)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Image recognition to scan textbook questions or handwritten problems via camera",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Daily practice questions feature",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Quiz section for students",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Progress tracking dashboard",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Doubt history log",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Offline saved notes capability",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Dark mode option",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Personalized learning recommendations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Animated AI teacher avatar with friendly student interface",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Concept Notes Tutor",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

@@ -1,0 +1,445 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add text-to-speech, doubt clarification system, ready-made notes, quiz section, progress tracking, and Google authentication",
+  "requirements": [
+    {
+      "id": "REQ-11",
+      "summary": "Implement text-to-speech (TTS) functionality for the AI teacher avatar so that explanations are spoken aloud when displayed in the TeacherAvatarPanel, supporting English, Hindi, and Marathi languages",
+      "acceptanceCriteria": [
+        "The TeacherAvatarPanel component triggers TTS when an explanation is displayed",
+        "TTS uses the browser's SpeechSynthesis API or equivalent",
+        "The spoken language matches the current app language setting (English, Hindi, or Marathi)",
+        "User can pause or stop TTS playback",
+        "TTS gracefully handles unsupported browsers with a fallback message"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useTextToSpeech.ts",
+          "operation": "create",
+          "description": "Create a React hook that wraps the browser's SpeechSynthesis API to provide TTS functionality. The hook should expose methods to speak text, pause, resume, stop, and check browser support. It should accept language code as a parameter and handle voice selection based on the language. Include proper cleanup on unmount and state management for speaking/paused status."
+        },
+        {
+          "path": "frontend/src/components/teacher/TeacherAvatarPanel.tsx",
+          "operation": "modify",
+          "description": "Integrate the useTextToSpeech hook into the TeacherAvatarPanel component. When an explanation is displayed, trigger TTS to speak the explanation text using the current app language from the language context. Add UI controls (play/pause/stop buttons) for TTS playback. Display a fallback message if TTS is not supported in the browser. Ensure TTS stops when the panel is collapsed or the component unmounts."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Create a doubt clarification system where students can submit doubts by typing text, speaking via microphone, or capturing an image via camera, and the system provides step-by-step explanations with examples",
+      "acceptanceCriteria": [
+        "A new Doubts page or section allows students to submit doubts via text input, voice input (using existing microphone integration), or camera capture (using existing camera integration)",
+        "Backend stores submitted doubts with the user's principal, doubt content (text or image blob reference), and timestamp",
+        "Backend returns a structured explanation for each doubt (step-by-step breakdown and examples)",
+        "Frontend displays the explanation in a clear, student-friendly format",
+        "Students can view a history of submitted doubts and their explanations"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useSpeechRecognition.ts",
+          "operation": "create",
+          "description": "Create a React hook that wraps the browser's SpeechRecognition API to support voice input for doubt submission. The hook should manage recognition state (listening, stopped), handle interim and final results, and support language selection. Include error handling and browser compatibility checks."
+        },
+        {
+          "path": "frontend/src/components/doubts/DoubtSubmissionForm.tsx",
+          "operation": "create",
+          "description": "Create a form component for submitting doubts with three input methods: text area for typing, a microphone button using the useSpeechRecognition hook, and a camera button using the camera/useCamera hook. Use the camera/useCamera component to handle camera capture. Verify the component's usage instructions before implementing. Allow users to preview captured images and transcribed voice text before submission. On submit, call the backend submitDoubt method with the question text and optional image blob. Display loading state during submission and success/error feedback."
+        },
+        {
+          "path": "frontend/src/components/doubts/DoubtDetailView.tsx",
+          "operation": "create",
+          "description": "Create a component to display a single doubt's details including the question text, attached image (if any), submission timestamp, and the step-by-step explanation provided by the backend. Format the explanation in a student-friendly manner with clear sections for each step and examples. Include a back button to return to the doubt history list."
+        },
+        {
+          "path": "frontend/src/pages/DoubtsPage.tsx",
+          "operation": "create",
+          "description": "Create the main Doubts page that conditionally shows either the DoubtSubmissionForm or the DoubtDetailView based on UI state. Include a tab or toggle to switch between submitting a new doubt and viewing doubt history. Use the authorization component to require user authentication before accessing this page. Wire this page into the app router and navigation."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add React Query hooks for doubt-related operations: useSubmitDoubt mutation (calls submitDoubt), useGetDoubtHistory query (calls getCallerDoubtHistory), and useGetDoubt query (calls getDoubt by ID). Include proper query key management and invalidation after mutations. These hooks should use the actor from useActor."
+        },
+        {
+          "path": "frontend/src/components/navigation/AppNav.tsx",
+          "operation": "modify",
+          "description": "Add a navigation button for the Doubts page to the navigation bar. Use an appropriate icon (e.g., question mark or help icon) and label. Ensure the button highlights when the Doubts route is active."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the DoubtsPage route in the TanStack Router configuration. Use a path like '/doubts' and import the DoubtsPage component."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Provide ready-made notes organized by class (4th to 12th standard) and subject, allowing students to browse, view, highlight important points, download, and share notes",
+      "acceptanceCriteria": [
+        "Backend stores a library of ready-made notes with fields for class level (4-12), subject, topic, and content",
+        "Frontend provides a browser/filter UI to select class and subject, displaying matching ready-made notes",
+        "Students can view full note content in a readable format",
+        "Students can highlight text within notes (stored locally or per-user in backend)",
+        "Students can download notes as a text or PDF file",
+        "Students can share notes via a shareable link or export mechanism"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ready-notes/ReadyNotesFilters.tsx",
+          "operation": "create",
+          "description": "Create a filter component with dropdowns for selecting class level (4-12) and subject. Use the Level and Subject enums from backend.d.ts. On selection change, trigger a callback to update the parent component's filter state."
+        },
+        {
+          "path": "frontend/src/components/ready-notes/ReadyNotesList.tsx",
+          "operation": "create",
+          "description": "Create a list component that displays ready-made notes filtered by class and subject. Each note item should show the title, topic, and a preview of the content. On click, navigate to the ReadyNoteDetailPage with the note ID."
+        },
+        {
+          "path": "frontend/src/components/ready-notes/ReadyNoteDetailView.tsx",
+          "operation": "create",
+          "description": "Create a component that displays the full content of a ready-made note in a readable format. Implement text highlighting functionality using browser Selection API or a library, storing highlights in localStorage keyed by note ID and user principal. Include buttons to download the note content as a text file and to copy a shareable link to the note. Optionally, add a button to generate and download a PDF using a library like jsPDF."
+        },
+        {
+          "path": "frontend/src/pages/ReadyNotesPage.tsx",
+          "operation": "create",
+          "description": "Create the main Ready Notes page that combines ReadyNotesFilters and ReadyNotesList. Manage filter state (class level and subject) and pass filtered criteria to the list component. Use the authorization component to require user authentication before accessing this page. Wire this page into the app router and navigation."
+        },
+        {
+          "path": "frontend/src/pages/ReadyNoteDetailPage.tsx",
+          "operation": "create",
+          "description": "Create a detail page for viewing a single ready-made note. Fetch the note by ID from the backend and render it using ReadyNoteDetailView. Include a back button to return to the ReadyNotesPage. Wire this page into the app router with a dynamic route parameter for note ID."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add React Query hooks for ready-made notes: useGetReadyNotes query (calls a backend method to fetch ready-made notes filtered by class and subject) and useGetReadyNote query (calls a backend method to fetch a single ready-made note by ID). These hooks should use the actor from useActor."
+        },
+        {
+          "path": "frontend/src/components/navigation/AppNav.tsx",
+          "operation": "modify",
+          "description": "Add a navigation button for the Ready Notes page to the navigation bar. Use an appropriate icon (e.g., book or document icon) and label. Ensure the button highlights when the Ready Notes route is active."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the ReadyNotesPage and ReadyNoteDetailPage routes in the TanStack Router configuration. Use paths like '/ready-notes' and '/ready-notes/:id'. Import the corresponding page components."
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Replace Internet Identity authentication with Google Sign-Up/Sign-In using Google OAuth, and store student profile data including class level, subjects, saved notes, and learning history",
+      "acceptanceCriteria": [
+        "Frontend integrates Google OAuth for sign-up and sign-in, replacing the existing Internet Identity flow",
+        "Backend stores user profile data: Google account ID, class level (4-12), selected subjects, saved notes references, and learning history timestamps",
+        "Users can set their class level and subjects during initial sign-up or in Settings",
+        "All user-specific data (notes, doubts, progress) is associated with the authenticated Google account",
+        "Existing notes and images remain user-specific under the new authentication system"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useGoogleAuth.ts",
+          "operation": "create",
+          "description": "Create a React hook and context provider for Google OAuth authentication. Use a library like @react-oauth/google or implement OAuth 2.0 flow with Google Identity Services. Expose login, logout, and authentication state similar to useInternetIdentity. Store the Google ID token and use it to derive or map to an IC principal for backend calls. Include error handling and loading states."
+        },
+        {
+          "path": "frontend/src/components/auth/GoogleAuthButtons.tsx",
+          "operation": "create",
+          "description": "Create authentication buttons for Google Sign-In and Sign-Out using the useGoogleAuth hook. Display the user's Google profile picture and name when authenticated. Include loading and error states. Replace the existing AuthButtons component usage with this new component."
+        },
+        {
+          "path": "frontend/src/components/profile/ProfileSetupModal.tsx",
+          "operation": "create",
+          "description": "Create a modal component for initial profile setup that appears after a new user signs in with Google. The modal should prompt the user to select their class level (4-12) and subjects from the Level and Subject enums. On submission, call saveCallerUserProfile with the collected data. Do not show this modal if the user already has a profile. Include proper loading states and error handling."
+        },
+        {
+          "path": "frontend/src/pages/SettingsPage.tsx",
+          "operation": "modify",
+          "description": "Replace the existing AuthButtons component with GoogleAuthButtons. Add a profile settings section where users can update their class level and subjects. Use the getCallerUserProfile and saveCallerUserProfile backend methods. Display current profile data and allow editing. Include success/error feedback after saving."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Replace the InternetIdentityProvider with a GoogleAuthProvider wrapper. Wrap the app with the Google OAuth provider context from useGoogleAuth. Ensure the QueryClientProvider is still present."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Update the app entry to use the Google authentication context instead of Internet Identity. Show the ProfileSetupModal conditionally when a new user logs in and does not have a profile yet. Ensure proper loading states while checking authentication and profile status."
+        },
+        {
+          "path": "frontend/src/hooks/useActor.ts",
+          "operation": "modify",
+          "description": "Update the useActor hook to work with Google OAuth identity instead of Internet Identity. Map the Google ID token or user ID to an IC principal or adapt the backend actor initialization to accept Google auth credentials. Ensure the actor is created with the correct identity derived from Google authentication."
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Implement a quiz section where students can take quizzes on topics, with questions, answer options, scoring, and results display",
+      "acceptanceCriteria": [
+        "Backend stores quiz data with questions, multiple-choice answers, correct answers, and associated topic/subject",
+        "Frontend provides a quiz-taking UI where students select a topic, view questions one by one, and submit answers",
+        "Quiz results are calculated and displayed immediately after completion (score and correct/incorrect breakdown)",
+        "Quiz history is stored per user in the backend",
+        "Students can review past quiz attempts and scores"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/quiz/QuizSelector.tsx",
+          "operation": "create",
+          "description": "Create a component that allows students to select a quiz by topic or subject. Display available quizzes as cards or a list with metadata (topic, number of questions, difficulty). On selection, navigate to the QuizTakingPage with the quiz ID."
+        },
+        {
+          "path": "frontend/src/components/quiz/QuizQuestion.tsx",
+          "operation": "create",
+          "description": "Create a component that displays a single quiz question with multiple-choice answer options. Use radio buttons or cards for answer selection. Include navigation buttons to move to the next/previous question. Track the selected answer in parent component state."
+        },
+        {
+          "path": "frontend/src/components/quiz/QuizResults.tsx",
+          "operation": "create",
+          "description": "Create a component that displays quiz results after completion. Show the total score, percentage, and a breakdown of correct and incorrect answers. Optionally display each question with the student's answer and the correct answer. Include buttons to return to the quiz list or retake the quiz."
+        },
+        {
+          "path": "frontend/src/pages/QuizPage.tsx",
+          "operation": "create",
+          "description": "Create the main Quiz page that displays the QuizSelector and provides access to quiz history. Include tabs or sections to switch between taking a new quiz and viewing past attempts. Use the authorization component to require user authentication before accessing this page. Wire this page into the app router and navigation."
+        },
+        {
+          "path": "frontend/src/pages/QuizTakingPage.tsx",
+          "operation": "create",
+          "description": "Create a page for taking a quiz. Fetch the quiz by ID from the backend and display questions one by one using the QuizQuestion component. Track answers in state. On completion, submit the answers to the backend for grading and navigate to the QuizResults component. Include a progress indicator showing current question number. Wire this page into the app router with a dynamic route parameter for quiz ID."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add React Query hooks for quiz operations: useGetQuizzes query (calls a backend method to fetch available quizzes), useGetQuiz query (calls a backend method to fetch a single quiz by ID), useSubmitQuiz mutation (calls a backend method to submit quiz answers and get results), and useGetQuizHistory query (calls a backend method to fetch past quiz attempts). These hooks should use the actor from useActor."
+        },
+        {
+          "path": "frontend/src/components/navigation/AppNav.tsx",
+          "operation": "modify",
+          "description": "Add a navigation button for the Quiz page to the navigation bar. Use an appropriate icon (e.g., quiz or test icon) and label. Ensure the button highlights when the Quiz route is active."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the QuizPage and QuizTakingPage routes in the TanStack Router configuration. Use paths like '/quiz' and '/quiz/:id'. Import the corresponding page components."
+        }
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "summary": "Add a progress tracking dashboard that displays the student's learning progress, including topics studied, quizzes completed, notes created, and doubts clarified over time",
+      "acceptanceCriteria": [
+        "Backend tracks user activity: topics viewed, videos watched, quizzes taken, notes created, and doubts submitted",
+        "Frontend displays a dashboard page with visual progress indicators (charts, counts, or progress bars)",
+        "Dashboard shows metrics such as total topics studied, quizzes passed, notes count, and recent activity timeline",
+        "Progress data is persisted per authenticated user and updated in real-time"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/dashboard/ProgressMetrics.tsx",
+          "operation": "create",
+          "description": "Create a component that displays progress metrics as cards or stats. Show counts for topics studied, videos watched, quizzes completed, notes created, and doubts clarified. Use icons and labels for clarity. Fetch data from the backend via a progress query hook."
+        },
+        {
+          "path": "frontend/src/components/dashboard/ActivityTimeline.tsx",
+          "operation": "create",
+          "description": "Create a component that displays a timeline or list of recent user activities (e.g., 'Watched video on X', 'Created note on Y', 'Completed quiz on Z'). Fetch activity data from the backend and sort by timestamp descending. Limit to the most recent 10-20 activities."
+        },
+        {
+          "path": "frontend/src/components/dashboard/ProgressCharts.tsx",
+          "operation": "create",
+          "description": "Create a component that displays visual progress indicators using charts or progress bars. Use a charting library like recharts or chart.js to render bar charts or line charts showing progress over time (e.g., quizzes per week, topics per subject). Fetch aggregated progress data from the backend."
+        },
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "create",
+          "description": "Create the main Dashboard page that combines ProgressMetrics, ActivityTimeline, and ProgressCharts components. Display a welcome message with the user's name. Use the authorization component to require user authentication before accessing this page. Wire this page into the app router and navigation."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add React Query hooks for progress tracking: useGetProgressMetrics query (calls a backend method to fetch aggregated progress metrics), useGetActivityTimeline query (calls a backend method to fetch recent activity log), and useGetProgressCharts query (calls a backend method to fetch time-series progress data for charting). These hooks should use the actor from useActor."
+        },
+        {
+          "path": "frontend/src/components/navigation/AppNav.tsx",
+          "operation": "modify",
+          "description": "Add a navigation button for the Dashboard page to the navigation bar. Use an appropriate icon (e.g., dashboard or chart icon) and label. Ensure the button highlights when the Dashboard route is active."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the DashboardPage route in the TanStack Router configuration. Use a path like '/dashboard' and import the DashboardPage component. Optionally set this as the default landing page after login."
+        }
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "summary": "Implement daily practice questions feature that presents a small set of practice questions to students each day, with answers and explanations",
+      "acceptanceCriteria": [
+        "Backend generates or retrieves a set of daily practice questions (randomized or scheduled) for each class level and subject",
+        "Frontend displays a daily practice section on the dashboard or a dedicated page",
+        "Students can attempt the questions and view answers with explanations after submission",
+        "Completed daily practice is tracked and contributes to the progress dashboard"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/practice/DailyPracticeCard.tsx",
+          "operation": "create",
+          "description": "Create a card component that displays daily practice questions. Show the question text, multiple-choice answers (if applicable), and a submit button. After submission, display the correct answer and explanation. Use state to track whether the user has answered. Fetch daily practice data from the backend via a query hook."
+        },
+        {
+          "path": "frontend/src/components/practice/DailyPracticeList.tsx",
+          "operation": "create",
+          "description": "Create a list component that displays all daily practice questions for the day. Each question is rendered using DailyPracticeCard. Show a completion indicator when all questions are answered. Include a summary of correct/incorrect answers."
+        },
+        {
+          "path": "frontend/src/pages/DailyPracticePage.tsx",
+          "operation": "create",
+          "description": "Create a dedicated page for daily practice that displays DailyPracticeList. Include a header with the date and a motivational message. Use the authorization component to require user authentication before accessing this page. Wire this page into the app router and navigation."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add React Query hooks for daily practice: useGetDailyPractice query (calls a backend method to fetch today's practice questions), useSubmitDailyPracticeAnswer mutation (calls a backend method to submit an answer and get feedback). Include proper query invalidation to update progress tracking after submission. These hooks should use the actor from useActor."
+        },
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "modify",
+          "description": "Add a Daily Practice section to the Dashboard page. Display a preview or link to the DailyPracticePage. Show a badge or indicator if today's practice is not yet completed. Include a call-to-action button to navigate to the full daily practice page."
+        },
+        {
+          "path": "frontend/src/components/navigation/AppNav.tsx",
+          "operation": "modify",
+          "description": "Add a navigation button for the Daily Practice page to the navigation bar. Use an appropriate icon (e.g., calendar or practice icon) and label. Ensure the button highlights when the Daily Practice route is active."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the DailyPracticePage route in the TanStack Router configuration. Use a path like '/daily-practice' and import the DailyPracticePage component."
+        }
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "summary": "Add a doubt history log where students can view all previously submitted doubts, their timestamps, and the explanations provided",
+      "acceptanceCriteria": [
+        "Backend stores all submitted doubts with timestamps and associated explanations",
+        "Frontend provides a Doubt History page listing all past doubts sorted by date",
+        "Students can click on a doubt to view the full question and explanation again",
+        "Doubts can be filtered or searched by keyword or date range"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/doubts/DoubtHistoryList.tsx",
+          "operation": "create",
+          "description": "Create a list component that displays all submitted doubts sorted by timestamp descending. Each list item should show the doubt question (truncated), submission date, and status badge (answered/in progress). On click, navigate to the DoubtDetailView with the doubt ID. Include a search input to filter doubts by keyword and optionally date range filters."
+        },
+        {
+          "path": "frontend/src/pages/DoubtsPage.tsx",
+          "operation": "modify",
+          "description": "Add a tab or section to the Doubts page for viewing doubt history. Display the DoubtHistoryList component in this section. Allow users to switch between submitting a new doubt and viewing history. Ensure the history list uses the useGetDoubtHistory query hook."
+        }
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "summary": "Enable offline saved notes capability so students can access their notes and ready-made notes without an internet connection",
+      "acceptanceCriteria": [
+        "Frontend caches notes data (user-created and ready-made) locally using IndexedDB or localStorage",
+        "Students can view cached notes when offline",
+        "When online, the app syncs any new notes or edits with the backend",
+        "A visual indicator shows when the app is in offline mode"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useOfflineStorage.ts",
+          "operation": "create",
+          "description": "Create a React hook that wraps IndexedDB or localStorage to cache notes and ready-made notes data. Provide methods to save, retrieve, and clear cached notes. Implement a sync mechanism that detects when the app is online and uploads any pending changes to the backend. Use the Network Information API or online/offline events to detect connectivity."
+        },
+        {
+          "path": "frontend/src/components/common/OfflineIndicator.tsx",
+          "operation": "create",
+          "description": "Create a component that displays a visual indicator (e.g., a banner or badge) when the app is offline. Use the online/offline events or a connectivity hook to update the indicator state. Display a friendly message like 'You are offline. Some features may be limited.'"
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Update the notes and ready-made notes query hooks to integrate with useOfflineStorage. When fetching data, first check the offline cache and return cached data if available. On successful backend fetch, update the cache. When creating or updating notes while offline, store changes locally and mark them for sync when online."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Add the OfflineIndicator component to the AppLayout so it is visible across all pages. Position it at the top or bottom of the layout for consistent visibility."
+        },
+        {
+          "path": "frontend/src/pages/NotesPage.tsx",
+          "operation": "modify",
+          "description": "Update the NotesPage to display cached notes when offline. Show a message indicating that notes are being loaded from local storage. Disable create/edit functionality when offline or queue changes for sync when online."
+        },
+        {
+          "path": "frontend/src/pages/ReadyNotesPage.tsx",
+          "operation": "modify",
+          "description": "Update the ReadyNotesPage to display cached ready-made notes when offline. Show a message indicating that notes are being loaded from local storage. Ensure the app does not attempt backend calls when offline."
+        }
+      ]
+    },
+    {
+      "id": "REQ-20",
+      "summary": "Implement personalized learning recommendations on the dashboard that suggest topics, quizzes, or practice questions based on the student's progress, class level, and subjects",
+      "acceptanceCriteria": [
+        "Backend analyzes user activity (topics viewed, quiz scores, doubts submitted) to generate personalized recommendations",
+        "Frontend displays recommended topics or quizzes on the dashboard or home page",
+        "Recommendations adapt as the student progresses and interacts with more content",
+        "Students can dismiss or act on recommendations directly from the UI"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/recommendations/RecommendationCard.tsx",
+          "operation": "create",
+          "description": "Create a card component that displays a single personalized recommendation. Show the recommended item type (topic, quiz, practice), title, reason for recommendation (e.g., 'Based on your recent activity'), and an action button (e.g., 'Start Quiz', 'View Topic'). Include a dismiss button to remove the recommendation. Trigger navigation or action on button click."
+        },
+        {
+          "path": "frontend/src/components/recommendations/RecommendationsList.tsx",
+          "operation": "create",
+          "description": "Create a list or carousel component that displays multiple personalized recommendations using RecommendationCard. Fetch recommendations from the backend via a query hook. Handle empty state with a friendly message like 'Keep learning to get personalized recommendations!'"
+        },
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "modify",
+          "description": "Add a Personalized Recommendations section to the Dashboard page. Display the RecommendationsList component prominently near the top of the dashboard. Include a section header like 'Recommended for You'."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add React Query hooks for personalized recommendations: useGetRecommendations query (calls a backend method to fetch personalized recommendations based on user activity and profile), useDismissRecommendation mutation (calls a backend method to mark a recommendation as dismissed). Invalidate the recommendations query after dismissing. These hooks should use the actor from useActor."
+        }
+      ]
+    },
+    {
+      "id": "REQ-21",
+      "summary": "Add an animated AI teacher avatar with smooth transitions and friendly gestures in the TeacherAvatarPanel to enhance the student interface experience",
+      "acceptanceCriteria": [
+        "The teacher avatar image is replaced with an animated SVG or Lottie animation showing gestures (e.g., waving, pointing, nodding)",
+        "Animations trigger at appropriate times (e.g., when an explanation is displayed or TTS is playing)",
+        "Animations are subtle and do not distract from the learning content",
+        "Avatar animation is optimized for performance on mobile devices"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/teacher/AnimatedAvatar.tsx",
+          "operation": "create",
+          "description": "Create an animated avatar component using the generated animated AI teacher avatar image at frontend/public/assets/generated/teacher-avatar-animated.dim_256x256.png. Verify the component's usage instructions before implementing. If using Lottie, integrate a library like lottie-react. If using CSS animations, apply keyframe animations for subtle gestures like nodding or waving. Accept props to trigger different animation states (idle, speaking, explaining). Optimize animations for mobile performance by limiting frame rate and using CSS transforms."
+        },
+        {
+          "path": "frontend/src/components/teacher/TeacherAvatarPanel.tsx",
+          "operation": "modify",
+          "description": "Replace the static teacher avatar image with the AnimatedAvatar component. Pass animation state props based on UI state (e.g., set to 'speaking' when TTS is active, 'explaining' when an explanation is displayed, 'idle' otherwise). Ensure smooth transitions between animation states and that animations do not cause layout shifts."
+        }
+      ]
+    }
+  ]
+}

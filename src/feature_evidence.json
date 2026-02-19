@@ -1,0 +1,264 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-text-to-speech-tts-functionality-for-the-ai-teacher-avatar-so-that-explanations-are-spoken-aloud-when-displayed-in-the-teacheravatarpanel-supporting-english-hindi-and-marathi-languages",
+      "featureTitle": "Implement text-to-speech (TTS) functionality for the AI teacher avatar so that explanations are spoken aloud when displayed in the TeacherAvatarPanel, supporting English, Hindi, and Marathi languages",
+      "files": [
+        "frontend/src/components/teacher/TeacherAvatarPanel.tsx",
+        "frontend/src/hooks/useTextToSpeech.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-doubt-clarification-system-where-students-can-submit-doubts-by-typing-text-speaking-via-microphone-or-capturing-an-image-via-camera-and-the-system-provides-step-by-step-explanations-with-examples",
+      "featureTitle": "Create a doubt clarification system where students can submit doubts by typing text, speaking via microphone, or capturing an image via camera, and the system provides step-by-step explanations with examples",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/doubts/DoubtDetailView.tsx",
+        "frontend/src/components/doubts/DoubtSubmissionForm.tsx",
+        "frontend/src/components/navigation/AppNav.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/hooks/useSpeechRecognition.ts",
+        "frontend/src/pages/DoubtsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-provide-ready-made-notes-organized-by-class-4th-to-12th-standard-and-subject-allowing-students-to-browse-view-highlight-important-points-download-and-share-notes",
+      "featureTitle": "Provide ready-made notes organized by class (4th to 12th standard) and subject, allowing students to browse, view, highlight important points, download, and share notes",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/navigation/AppNav.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/ReadyNotesPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-13"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-replace-internet-identity-authentication-with-google-sign-up-sign-in-using-google-oauth-and-store-student-profile-data-including-class-level-subjects-saved-notes-and-learning-history",
+      "featureTitle": "Replace Internet Identity authentication with Google Sign-Up/Sign-In using Google OAuth, and store student profile data including class level, subjects, saved notes, and learning history",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/profile/ProfileSetupModal.tsx",
+        "frontend/src/pages/SettingsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-14"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-quiz-section-where-students-can-take-quizzes-on-topics-with-questions-answer-options-scoring-and-results-display",
+      "featureTitle": "Implement a quiz section where students can take quizzes on topics, with questions, answer options, scoring, and results display",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/navigation/AppNav.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/QuizPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-15"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-progress-tracking-dashboard-that-displays-the-student-s-learning-progress-including-topics-studied-quizzes-completed-notes-created-and-doubts-clarified-over-time",
+      "featureTitle": "Add a progress tracking dashboard that displays the student's learning progress, including topics studied, quizzes completed, notes created, and doubts clarified over time",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/navigation/AppNav.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-16"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-daily-practice-questions-feature-that-presents-a-small-set-of-practice-questions-to-students-each-day-with-answers-and-explanations",
+      "featureTitle": "Implement daily practice questions feature that presents a small set of practice questions to students each day, with answers and explanations",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/navigation/AppNav.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/DailyPracticePage.tsx",
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-17"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-doubt-history-log-where-students-can-view-all-previously-submitted-doubts-their-timestamps-and-the-explanations-provided",
+      "featureTitle": "Add a doubt history log where students can view all previously submitted doubts, their timestamps, and the explanations provided",
+      "files": [
+        "frontend/src/components/doubts/DoubtHistoryList.tsx",
+        "frontend/src/pages/DoubtsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-18"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-enable-offline-saved-notes-capability-so-students-can-access-their-notes-and-ready-made-notes-without-an-internet-connection",
+      "featureTitle": "Enable offline saved notes capability so students can access their notes and ready-made notes without an internet connection",
+      "files": [
+        "frontend/src/components/common/OfflineIndicator.tsx",
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/hooks/useOfflineStorage.ts",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/ReadyNotesPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-personalized-learning-recommendations-on-the-dashboard-that-suggest-topics-quizzes-or-practice-questions-based-on-the-student-s-progress-class-level-and-subjects",
+      "featureTitle": "Implement personalized learning recommendations on the dashboard that suggest topics, quizzes, or practice questions based on the student's progress, class level, and subjects",
+      "files": [
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-20"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-animated-ai-teacher-avatar-with-smooth-transitions-and-friendly-gestures-in-the-teacheravatarpanel-to-enhance-the-student-interface-experience",
+      "featureTitle": "Add an animated AI teacher avatar with smooth transitions and friendly gestures in the TeacherAvatarPanel to enhance the student interface experience",
+      "files": [
+        "frontend/src/components/teacher/TeacherAvatarPanel.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-21"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

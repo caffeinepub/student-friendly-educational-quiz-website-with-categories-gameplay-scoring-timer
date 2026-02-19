@@ -1,2 +1,3 @@
-# student-friendly-educational-quiz-website-with-categories-gameplay-scoring-timer
-Exported from Caffeine project: Student-friendly educational quiz website with categories, gameplay, scoring, timers, difficulty, leaderboards, and visuals
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`
